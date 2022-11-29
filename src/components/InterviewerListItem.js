@@ -6,13 +6,13 @@ export default function InterviewerListItem (props) {
   const { id, name, avatar } = props;
 
   return (
-    <li className="interviewers__item">
+    <li key={id} className="interviewers__item" onClick={() => {setInterviewer(id)}}>
       <img
         className="interviews__item-image"
-        src="https://i.imgur.com/LpaY82x.png"
-        alt="Sylvia Palmer"
+        src={avatar}
+        alt={name}
       />
-      Sylvia Palmer
+      {name}
     </li>
   );
 }
