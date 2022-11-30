@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import "components/Application.scss";
 import DayList from "./DayList";
+import Appointment from "./Appointment";
 
 // Mock Data TODO: Delete.
 const appointments = {
@@ -90,7 +91,16 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        {Object.values(appointments).map((appointment) => {
+          return (
+
+            <Appointment 
+            key={appointment.id} 
+            {...appointment}
+            />
+          )
+        })}
+        <Appointment time={'5pm'} />
       </section>
     </main>
   );
