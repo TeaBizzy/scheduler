@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { Axios } from "axios";
+import axios, { Axios } from "axios";
 
 // Mock Data TODO: Delete.
 const appointments = {
@@ -45,28 +45,15 @@ const appointments = {
   }
 };
 
-// MOCK DATA TODO: Remove this!!
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
-
 export default function Application(props) {
 
   const [day, setDay] = useState('Monday');
+  const [days, setDays] = useState([]);
+
+  useEffect(() => {
+    axios.get(`/api/days`)
+    .then(res => setDays([...res.data]));
+  }, []);
 
   return (
     <main className="layout">
