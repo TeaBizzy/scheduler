@@ -8,6 +8,7 @@
     "normalize.css": "^8.0.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-hooks-testing-library": "^0.6.0",
     "react-scripts": "3.4.4"
   },
   "proxy": "http://localhost:8001",
@@ -40,6 +41,7 @@
     "@storybook/react": "^5.0.10",
     "@testing-library/jest-dom": "^4.0.0",
     "@testing-library/react": "^8.0.7",
+    "react-test-renderer": "^16.9.0",
     "sass": "^1.53.0"
   },
   "jest": {
