@@ -36,6 +36,19 @@ export default function Application(props) {
     return axios.put(`/api/appointments/${id}`, {interview})
       .then(setState(prev => ({...prev, appointments})))
   };
+
+  const deleteInterview = function (id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    }
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState(prev => ({...prev, appointments}));
+  };
   
   useEffect(() => {
     Promise.all([axios.get(`/api/days`), axios.get(`/api/appointments`), axios.get(`/api/interviewers`)])
@@ -55,6 +68,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        deleteInterview={deleteInterview}
       />
     );
   });
