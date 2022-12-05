@@ -15,8 +15,19 @@ const STATUS = "STATUS";
 
 export default function Appointment(props) {
 
-  const { time, interview, interviewers } = props;
+  const { time, interview, interviewers, bookInterview, id } = props;
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY );
+
+  const save = function(name, interviewer) {
+    transition(STATUS);
+    const interview = {
+      student: name,
+      interviewer
+    };
+
+    bookInterview(id, interview);
+    transition(SHOW);
+  };
 
   return (
     <article className="appointment">
@@ -26,7 +37,7 @@ export default function Appointment(props) {
         console.log("Clicked onAdd")
         transition(CREATE);
         }} />}
-      {mode === CREATE && <Form interviewers={interviewers} onSave={() => transition(STATUS)} onCancel={() => back()}/>}
+      {mode === CREATE && <Form interviewers={interviewers} onSave={save} onCancel={() => back()}/>}
       {mode === STATUS && <Status />}
     </article>
   );
