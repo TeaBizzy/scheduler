@@ -7,15 +7,17 @@ import Form from "./Form";
 import { useVisualMode } from "hooks/useVisualMode";
 import { action } from "@storybook/addon-actions";
 import Status from "./Status";
+import Confirm from "./Confirm";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const STATUS = "STATUS";
+const CONFIRM = "CONFIRM";
 
 export default function Appointment(props) {
 
-  const { time, interview, interviewers, bookInterview, id } = props;
+  const { time, interview, interviewers, bookInterview, id , deleteInterview} = props;
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY );
 
   const save = function(name, interviewer) {
@@ -29,16 +31,22 @@ export default function Appointment(props) {
       .then(transition(SHOW));
   };
 
+  const onDelete = function() {
+    deleteInterview(id)
+      .then(transition(EMPTY));
+  };
+
   return (
     <article className="appointment">
       <Header time={time}/>
-      {mode === SHOW && <Show interviewer={interview.interviewer} student={interview.student} />}
+      {mode === SHOW && <Show interviewer={interview.interviewer} student={interview.student} onDelete={() => transition(CONFIRM)} />}
       {mode === EMPTY && <Empty onAdd={() => {
         console.log("Clicked onAdd")
         transition(CREATE);
         }} />}
       {mode === CREATE && <Form interviewers={interviewers} onSave={save} onCancel={() => back()}/>}
       {mode === STATUS && <Status />}
+      {mode === CONFIRM && <Confirm message={"Are you sure you want to delete this appointment?"} onConfirm={() => onDelete()} onCancel={back}/>}
     </article>
   );
 }
