@@ -30,8 +30,8 @@ export default function Appointment(props) {
   };
 
   const onDelete = function() {
-    deleteInterview(id);
-    transition(EMPTY);
+    deleteInterview(id)
+      .then(transition(EMPTY));
   };
 
   return (
