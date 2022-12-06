@@ -15,11 +15,11 @@ export function useVisualMode(initial) {
       setHistory((prev) => ([...prev, mode]));
     }
     setMode(mode);
+
   }
 
   function back() {
-
-    if(history < 2) return;
+    if(history.length < 2) return;
 
     setHistory(prev => {
       prev.pop();
