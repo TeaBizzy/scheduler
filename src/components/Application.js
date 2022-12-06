@@ -34,7 +34,7 @@ export default function Application(props) {
     };
 
     return axios.put(`/api/appointments/${id}`, {interview})
-      .then(setState(prev => ({...prev, appointments})))
+      .then(() => setState(prev => ({...prev, appointments})))
   };
 
   const deleteInterview = function (id) {
@@ -48,7 +48,7 @@ export default function Application(props) {
     };
 
     return axios.delete(`/api/appointments/${id}`)
-      .then(setState(prev => ({...prev, appointments})));
+      .then(() => setState(prev => ({...prev, appointments})))
   };
   
   useEffect(() => {
