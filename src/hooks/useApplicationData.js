@@ -7,7 +7,7 @@ export default function useApplicationData() {
     day: "Monday",
     days: [],
     appointments: {},
-    interviewers: {}
+    interviewers: {},
   });
 
   useEffect(() => {
@@ -30,9 +30,11 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-
     return axios.put(`/api/appointments/${id}`, {interview})
-      .then(() => setState(prev => ({...prev, appointments})))
+    .then(() => {
+      setState(prev => ({...prev, appointments}))
+      updateSpots(-1)
+    })
   };
 
   const deleteInterview = function (id) {
@@ -46,7 +48,22 @@ export default function useApplicationData() {
     };
 
     return axios.delete(`/api/appointments/${id}`)
-      .then(() => setState(prev => ({...prev, appointments})))
+      .then(() => {
+        setState(prev => ({...prev, appointments}))
+        updateSpots(1)
+      })
+  };
+
+  const updateSpots = function(incrementor) {
+    const daysCopy = [...state.days]; 
+    console.log(daysCopy);
+    const dayI = daysCopy.findIndex((day) => {
+      return day.name === state.day
+    });
+    console.log(dayI);
+    daysCopy[dayI].spots += incrementor;
+    console.log(daysCopy);
+    setState(prev => ({...prev, days: daysCopy}))
   };
 
   return {state, setDay, bookInterview, deleteInterview}
