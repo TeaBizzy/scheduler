@@ -30,6 +30,7 @@ export default function Form(props) {
             placeholder="Enter Student Name"
             onChange={e => setStudent(e.target.value)}
             value={student}
+            data-testid="student-name-input"
           />
         </form>
         <InterviewerList 
