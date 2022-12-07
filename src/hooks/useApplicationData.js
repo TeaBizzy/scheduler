@@ -56,13 +56,10 @@ export default function useApplicationData() {
 
   const updateSpots = function(incrementor) {
     const daysCopy = [...state.days]; 
-    console.log(daysCopy);
     const dayI = daysCopy.findIndex((day) => {
       return day.name === state.day
     });
-    console.log(dayI);
     daysCopy[dayI].spots += incrementor;
-    console.log(daysCopy);
     setState(prev => ({...prev, days: daysCopy}))
   };
 
