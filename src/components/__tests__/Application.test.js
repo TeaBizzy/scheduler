@@ -50,19 +50,19 @@ describe("Application", () => {
 
     await waitForElement(() => getByText(container, "Archie Cohen"))
     
-    
-    const appointments = getAllByTestId(container, "appointment");
-    const appointment = appointments[1];
+    const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, "Archie Cohen"));
+    console.log(prettyDOM(appointment));
     
     fireEvent.click(getByAltText(appointment, "Delete"));
+    
+    expect(getByText(appointment, "Are you sure you want to delete this appointment?")).toBeInTheDocument();
+
     fireEvent.click(getByText(appointment, "Confirm"))
     
     expect(getByText(appointment, "DELETING")).toBeInTheDocument();
     
-    await waitForElementToBeRemoved(() => queryByText(appointment, "DELETING"));
+    await waitForElement(() => getByAltText(appointment, "Add"));
     
-    expect(queryByText(container, "Archie Cohen")).not.toBeInTheDocument();
-
     const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
     
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
