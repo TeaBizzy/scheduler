@@ -51,7 +51,6 @@ describe("Application", () => {
     await waitForElement(() => getByText(container, "Archie Cohen"))
     
     const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, "Archie Cohen"));
-    console.log(prettyDOM(appointment));
     
     fireEvent.click(getByAltText(appointment, "Delete"));
     
@@ -66,5 +65,35 @@ describe("Application", () => {
     const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
     
     expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
+  });
+
+
+  it("loads data, edits an inerview and keeps the spots remaining for Monday the same", async () => {
+    const { container } = render(<Application />);
+
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, "Archie Cohen"));
+
+    fireEvent.click(getByAltText(appointment, "Edit"));
+
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: "Stefan Talbot" }
+    });
+    fireEvent.click(getByAltText(appointment, "Tori Malcolm"));
+
+    fireEvent.click(getByText(appointment, "Save"))
+
+    expect(getByText(appointment, "SAVING")).toBeInTheDocument();
+
+    await waitForElement(() => getByText(appointment, "Stefan Talbot"));
+
+    expect(getByText(appointment, "Stefan Talbot")).toBeInTheDocument();
+    
+    expect(getByText(appointment, "Tori Malcolm")).toBeInTheDocument();
+
+    const day = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
+    
+    expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   });
 })
