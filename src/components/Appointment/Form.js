@@ -13,6 +13,7 @@ export default function Form(props) {
   const reset = function() {
     setStudent('');
     setInterviewer(null);
+    setError("");
   };
 
   const cancel = function() {
