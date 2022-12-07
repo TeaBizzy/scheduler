@@ -85,5 +85,12 @@ export default {
       status:204,
       statusText: "No Content"
     });
+  }),
+
+  delete: jest.fn(() => {
+    return Promise.resolve({
+      status: 204,
+      statusText: "No Content"
+    })
   })
 };
