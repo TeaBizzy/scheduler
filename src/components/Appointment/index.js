@@ -13,7 +13,7 @@ import Error from "./Error";
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
-const STATUS = "STATUS";
+const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
 const ERROR_SAVE = "ERROR_SAVE";
@@ -38,7 +38,7 @@ export default function Appointment(props) {
   };
 
   const onDelete = function() {
-    transition(STATUS, true);
+    transition(DELETING, true);
     deleteInterview(id)
       .then(() => transition(EMPTY))
       .catch(() => transition(ERROR_DELETE, true));
@@ -54,7 +54,7 @@ export default function Appointment(props) {
       {mode === CREATE && <Form interviewers={interviewers} onSave={save} onCancel={() => back()}/>}
       {mode === EDIT && <Form interviewers={interviewers} student={interview.student} interviewer={interview.interviewer.id} onSave={save} onCancel={() => back()}/>}
       {mode === SAVING && <Status message={SAVING} />}
-      {mode === STATUS && <Status />}
+      {mode === DELETING && <Status message={DELETING}/>}
       {mode === CONFIRM && <Confirm message={"Are you sure you want to delete this appointment?"} onConfirm={() => onDelete()} onCancel={() => back()}/>}
       {mode === ERROR_SAVE && <Error message={"Saving was unsuccessful :("} onClose={() => back()}/>}
       {mode === ERROR_DELETE && <Error message={"Deleting was unsuccessful :("} onClose={() => back()}/>}
