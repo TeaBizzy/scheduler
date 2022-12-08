@@ -129,4 +129,29 @@ describe("Application", () => {
 
     expect(getByAltText(appointment, "Add")).toBeInTheDocument();
   });
+
+
+  it("shows the delete error when failing to delete an existing appointment", async () => {
+    axios.delete.mockRejectedValueOnce();
+
+    const { container } = render(<Application />);
+
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    const appointment = getAllByTestId(container, "appointment")[1];
+
+    
+    fireEvent.click(getByAltText(appointment, "Delete"));
+    fireEvent.click(getByText(appointment, "Confirm"));
+    
+    expect(getByText(appointment, "DELETING")).toBeInTheDocument();
+
+    await waitForElement(() => getByText(appointment, "Deleting was unsuccessful :("));
+
+    expect(getByText(appointment, "Deleting was unsuccessful :(")).toBeInTheDocument();
+
+    fireEvent.click(getByAltText(appointment, "Close"));
+
+    expect(getByText(container, "Archie Cohen")).toBeInTheDocument();
+  })
 })
