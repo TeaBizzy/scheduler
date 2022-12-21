@@ -124,10 +124,6 @@ describe("Application", () => {
     await waitForElement(() => getByText(appointment, "Saving was unsuccessful :("));
 
     expect(getByText(appointment, "Saving was unsuccessful :(")).toBeInTheDocument();
-
-    fireEvent.click(getByAltText(appointment, "Close"));
-
-    expect(getByAltText(appointment, "Add")).toBeInTheDocument();
   });
 
 
